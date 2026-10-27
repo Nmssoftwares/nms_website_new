@@ -1,0 +1,101 @@
+/* Dark theme for Projects -> Footer. Every rule is scoped with .dzr (or body for the footer)
+   so it wins over the old light section CSS, whatever the load order. */
+
+/* two alternating dark shades (dz = #232546 from dark-zone.css) */
+.dz.dz2{background:#1b1d3a}
+.dzr{color:#D3D0EE}
+.dzr .wrap{position:relative;z-index:1}
+.dzr .sec-head h2,.dzr h3{color:#fff}
+.dzr .sec-head p{color:#C9C6EA}
+
+/* shared glass card look */
+.dzr .fp-card,.dzr .tm-card,.dzr .blog-card,.dzr .contact-item,.dzr .contact-form,
+#testimonials.dzr .nmt-card{
+  background:linear-gradient(150deg,rgba(46,38,108,.7),rgba(16,14,44,.7));
+  border:1px solid rgba(154,123,242,.38);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 18px 34px -22px #000;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:#D3D0EE;
+}
+.dzr .fp-card:hover,.dzr .tm-card:hover,.dzr .blog-card:hover,.dzr .contact-item:hover,
+#testimonials.dzr .nmt-card:hover{
+  border-color:var(--nm-b,#9A7BF2);
+  box-shadow:0 26px 44px -22px #000,0 0 28px rgba(154,123,242,.25);
+}
+
+/* ---------- Projects ---------- */
+.dzr .fp-media{background:rgba(154,123,242,.12)}
+.dzr .fp-media--skel{background:linear-gradient(135deg,rgba(154,123,242,.18),rgba(125,211,252,.1))}
+.dzr .fp-skel-icon{stroke:rgba(196,181,253,.55)}
+.dzr .fp-body p{color:#C3BFE4;opacity:1}
+.dzr .fp-stack span{color:#E0D7FF;background:rgba(154,123,242,.16);border-color:rgba(154,123,242,.4)}
+.dzr .fp-link{color:#C4B5FD}
+.dzr .sk-title,.dzr .sk-line,.dzr .sk-pill{background:rgba(255,255,255,.09)}
+
+/* ---------- Testimonials ---------- */
+#testimonials.dzr .nmt-card::before{background:linear-gradient(90deg,var(--nm-a),var(--nm-b))}
+#testimonials.dzr .nmt-q{color:rgba(196,181,253,.16)}
+#testimonials.dzr .nmt-text{color:#E6E3FA}
+#testimonials.dzr .nmt-name{color:#fff}
+#testimonials.dzr .nmt-role{color:#B9B5DD}
+#testimonials.dzr .nmt-who{border-top-color:rgba(154,123,242,.3)}
+#testimonials.dzr .nmt-av{background:linear-gradient(135deg,var(--nm-a),var(--nm-b))}
+#testimonials.dzr .nmt-card.is-featured{
+  background:linear-gradient(160deg,var(--nm-a),color-mix(in srgb,var(--nm-b) 45%,#1a1040));
+  border-color:transparent;box-shadow:0 30px 56px -28px #000,0 0 40px rgba(154,123,242,.3);
+}
+#testimonials.dzr .nmt-card.is-featured .nmt-text,
+#testimonials.dzr .nmt-card.is-featured .nmt-name{color:#fff}
+#testimonials.dzr .nmt-card.is-featured .nmt-role{color:rgba(255,255,255,.82)}
+#testimonials.dzr .nmt-card.is-featured .nmt-who{border-top-color:rgba(255,255,255,.28)}
+#testimonials.dzr .nmt-card.is-featured .nmt-av{color:var(--nm-a);background:#fff}
+
+/* ---------- Team ---------- */
+.dzr .tm-photo .tm-inner{border-color:#232546}
+.dzr .tm-role{color:#E0D7FF;background:rgba(154,123,242,.16);border-color:rgba(154,123,242,.4)}
+.dzr .tm-bio{color:#C3BFE4}
+.dzr .tm-social{border-top-color:rgba(154,123,242,.28)}
+.dzr .tm-social a{color:#C4B5FD;background:rgba(154,123,242,.14)}
+.dzr .tm-social a:hover{color:#fff;background:linear-gradient(135deg,var(--nm-a),var(--nm-b))}
+
+/* ---------- Blog ---------- */
+.dzr .blog-card .date{color:#B9B5DD}
+.dzr .blog-card p{color:#C3BFE4}
+.dzr .blog-card .read{color:#C4B5FD}
+.dzr .blog-empty{color:#C3BFE4}
+.dzr .blog-more a{color:#C4B5FD}
+
+/* ---------- Contact ---------- */
+#contact::before{content:"";position:absolute;left:-120px;top:18%;width:440px;height:440px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(154,123,242,.24),transparent 65%);filter:blur(26px)}
+.dzr .c-label{color:#B9B5DD}
+.dzr .ci-text strong{color:#fff}
+.dzr .ci-arrow{color:#C4B5FD}
+.dzr .cf-sub{color:#C3BFE4}
+.dzr .contact-form label{color:#E6E3FA}
+.dzr .contact-form input,.dzr .contact-form select,.dzr .contact-form textarea{
+  background:rgba(10,8,40,.45);border:1px solid rgba(154,123,242,.35);color:#fff}
+.dzr .contact-form input::placeholder,.dzr .contact-form textarea::placeholder{color:#8F8BB8}
+.dzr .contact-form input:focus,.dzr .contact-form select:focus,.dzr .contact-form textarea:focus{
+  background:rgba(10,8,40,.7);border-color:var(--nm-b);box-shadow:0 0 0 4px rgba(125,211,252,.16)}
+.dzr .contact-form select option{background:#1f2147;color:#fff}
+.dzr .contact-form .err{color:#FDA4AF}
+.dzr .contact-ok{background:rgba(125,211,252,.12);border-color:var(--nm-b);color:#E6F6FF}
+.dzr .contact-ok.is-error{background:rgba(225,29,72,.15);border-color:#FB7185;color:#FFD5DC}
+
+/* ---------- Footer ---------- */
+body .nmf{color:#C3BFE4;
+  background:radial-gradient(700px 320px at 8% 0%,rgba(154,123,242,.22),transparent 65%),
+             radial-gradient(600px 300px at 95% 100%,rgba(125,211,252,.12),transparent 65%),#181a36}
+body .nmf-logo{color:#fff}
+body .nmf h4{color:#fff}
+body .nmf-about,body .nmf-links a,body .nmf-contact a{color:#C3BFE4}
+body .nmf-links a:hover,body .nmf-contact a:hover,body .nmf-bottom a:hover{color:#fff}
+body .nmf-social a{color:#C4B5FD;background:rgba(154,123,242,.14);border-color:rgba(154,123,242,.4);box-shadow:none}
+body .nmf-social a:hover{color:#fff}
+body .nmf-chip{color:#C4B5FD;background:rgba(154,123,242,.16);border-color:rgba(154,123,242,.4)}
+body .nmf-bottom{color:#A8A4CF;border-top-color:rgba(154,123,242,.28)}
+body .nmf-top{background:rgba(154,123,242,.14);border-color:rgba(154,123,242,.4)}
+body .nmf-top:hover{background:rgba(154,123,242,.3)}
+/* network background canvas (created by net-bg.js) */
+.net-cv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}

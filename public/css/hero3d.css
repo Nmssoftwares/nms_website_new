@@ -1,0 +1,49 @@
+/* 3D hero console (replaces the white stats card). Follows --nm-a / --nm-b. */
+.hx{position:relative;z-index:2;display:flex;justify-content:center;padding:26px 24px;perspective:1100px;}
+.hx-stage{position:relative;width:min(100%,450px);transform-style:preserve-3d;
+  transform:translateY(var(--ty,0px)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));will-change:transform;}
+.hx-ring{position:absolute;left:50%;top:50%;width:118%;aspect-ratio:1;margin:-59% 0 0 -59%;border-radius:50%;
+  border:1.5px dashed color-mix(in srgb,var(--nm-b) 60%,#fff);opacity:.55;
+  transform:translateZ(-60px) rotateX(72deg);animation:hx-spin 28s linear infinite;pointer-events:none;}
+@keyframes hx-spin{to{transform:translateZ(-60px) rotateX(72deg) rotateZ(360deg);}}
+.hx-card{position:relative;transform-style:preserve-3d;border-radius:22px;padding:16px 20px 22px;color:#fff;overflow:visible;
+  background:linear-gradient(150deg,rgba(46,38,108,.82),rgba(16,14,44,.88));
+  border:1px solid color-mix(in srgb,var(--nm-b) 45%,transparent);
+  box-shadow:0 46px 70px -34px color-mix(in srgb,var(--nm-a) 80%,#000),inset 0 1px 0 rgba(255,255,255,.2);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.hx-card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(260px circle at var(--mx,30%) var(--my,0%),rgba(255,255,255,.22),transparent 60%);}
+.hx-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+  background-size:26px 26px;-webkit-mask-image:linear-gradient(#000,transparent 85%);mask-image:linear-gradient(#000,transparent 85%);}
+.hx-bar{display:flex;align-items:center;gap:7px;transform:translateZ(18px);font:500 .72rem/1 'Inter',sans-serif;color:#C9C6EA;letter-spacing:.04em;}
+.hx-bar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);}
+.hx-bar i:first-child{background:var(--nm-b);}
+.hx-bar span{margin-left:auto;}
+.hx-bar b{display:inline-block;width:7px;height:7px;border-radius:50%;background:#34D399;margin-right:6px;animation:hx-pulse 1.8s ease-in-out infinite;}
+@keyframes hx-pulse{50%{opacity:.3;}}
+.hx-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;transform:translateZ(36px);transform-style:preserve-3d;}
+.hx-stat{padding:14px 14px 12px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);}
+.hx-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2rem;line-height:1.1;
+  background:linear-gradient(120deg,#fff,color-mix(in srgb,var(--nm-b) 70%,#fff));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;}
+.hx-lbl{font-size:.8rem;color:#C9C6EA;margin-top:4px;}
+.hx-code{margin-top:14px;transform:translateZ(22px);font:500 .78rem/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:#B9B3F5;}
+.hx-code em{font-style:normal;color:#7CE8C6;}
+.hx-code u{display:inline-block;width:7px;height:13px;background:#B9B3F5;vertical-align:-2px;text-decoration:none;animation:hx-blink 1s steps(1) infinite;}
+@keyframes hx-blink{50%{opacity:0;}}
+.hx-chip{position:absolute;transform:translate3d(0,0,calc(var(--z,80px)*var(--sp,1)));transform-style:preserve-3d;}
+.hx-chip>div{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:12px;white-space:nowrap;
+  font:600 .76rem/1 'Inter',sans-serif;color:#fff;background:rgba(30,26,78,.88);
+  border:1px solid color-mix(in srgb,var(--nm-b) 55%,transparent);box-shadow:0 16px 30px -14px rgba(10,8,40,.8);
+  animation:hx-bob 5s ease-in-out infinite;animation-delay:var(--d,0s);}
+.hx-chip svg{width:18px;height:18px;stroke:color-mix(in srgb,var(--nm-b) 65%,#fff);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+@keyframes hx-bob{50%{transform:translateY(-9px);}}
+.hx-c3{top:-16px;right:-14px;--z:90px;--d:0s}
+.hx-c4{left:-14px;bottom:-16px;--z:76px;--d:-2s}
+@media (max-width:980px){.hx{padding:18px 18px;}.hx-stage{width:min(100%,420px);}}
+@media (max-width:560px){
+  .hx-c3{right:-6px}.hx-c4{left:-6px}
+  .hx-num{font-size:1.6rem}.hx-chip>div{padding:7px 10px;font-size:.7rem}
+}
+@media (prefers-reduced-motion:reduce){.hx-ring,.hx-chip>div,.hx-bar b,.hx-code u{animation:none;}}
+#hero3d{-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 48%);mask-image:linear-gradient(90deg,transparent 0%,#000 48%);}

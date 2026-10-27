@@ -1,0 +1,27 @@
+/* Featured projects section */
+.fp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.fp-card{display:flex;flex-direction:column;overflow:hidden;border-radius:22px;background:#fff;border:1px solid color-mix(in srgb,var(--nm-a) 14%,transparent);box-shadow:0 12px 32px -22px color-mix(in srgb,var(--nm-a) 50%,transparent);transition:transform .3s ease,box-shadow .3s ease}
+.fp-card:hover{transform:translateY(-8px);box-shadow:0 30px 50px -24px color-mix(in srgb,var(--nm-a) 55%,transparent)}
+.fp-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:color-mix(in srgb,var(--nm-a) 10%,#fff)}
+.fp-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.fp-card:hover .fp-media img{transform:scale(1.07)}
+.fp-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,color-mix(in srgb,#0B1B4D 55%,transparent))}
+.fp-cat{position:absolute;left:18px;bottom:16px;z-index:1;padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:700;color:#fff;background:linear-gradient(90deg,var(--nm-a),var(--nm-b))}
+.fp-num{position:absolute;right:18px;top:14px;z-index:1;font-size:2.2rem;font-weight:800;line-height:1;color:rgba(255,255,255,.85)}
+.fp-body{display:flex;flex-direction:column;flex:1;padding:24px 26px 26px}
+.fp-body h3{font-size:1.25rem;margin-bottom:8px}
+.fp-body p{flex:1;font-size:.95rem;line-height:1.65;opacity:.78;margin-bottom:18px}
+.fp-stack{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.fp-stack span{padding:5px 12px;border-radius:999px;font-size:.8rem;font-weight:600;color:var(--nm-a);background:color-mix(in srgb,var(--nm-a) 9%,transparent);border:1px solid color-mix(in srgb,var(--nm-a) 22%,transparent)}
+.fp-link{align-self:flex-start;font-weight:700;text-decoration:none;color:var(--nm-a);display:inline-flex;gap:6px;align-items:center}
+.fp-link span{transition:transform .25s ease}
+.fp-card:hover .fp-link span{transform:translateX(6px)}
+@media (max-width:760px){.fp-grid{grid-template-columns:1fr}}
+/* ---- Skeleton (placeholder) cards shown when no projects exist ---- */
+.fp-media--skel{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,color-mix(in srgb,var(--nm-a,#2563EB) 12%,#fff),color-mix(in srgb,var(--nm-b,#0EA5E9) 10%,#fff))}
+.fp-skel-icon{stroke:color-mix(in srgb,var(--nm-a,#2563EB) 45%,transparent)}
+.sk-title{height:18px;width:70%;background:color-mix(in srgb,var(--nm-a,#2563EB) 10%,#fff);border-radius:6px;margin-bottom:12px}
+.sk-line{height:11px;width:100%;background:#F1F2F6;border-radius:5px;margin-bottom:8px}
+.sk-line--short{width:85%;margin-bottom:18px}
+.sk-pills{display:flex;gap:8px}
+.sk-pill{height:22px;width:60px;background:#F1F2F6;border-radius:999px}

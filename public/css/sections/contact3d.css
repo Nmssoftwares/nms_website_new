@@ -1,0 +1,42 @@
+/* Contact: layered 3D boy */
+.ct-art{width:min(100%,420px);margin:0 auto 10px}
+.ct-persp{perspective:1100px}
+.ct-stage{position:relative;width:100%;aspect-ratio:1;transform-style:preserve-3d;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));will-change:transform}
+.ct-ly{position:absolute;inset:0;transform-style:preserve-3d;transform:translateZ(var(--z,0px))}
+.ct-img{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none}
+
+/* glow + floor shadow behind everything */
+.ct-glow{position:absolute;left:6%;top:10%;width:88%;height:80%;border-radius:50%;filter:blur(14px);
+  background:radial-gradient(circle,rgba(154,123,242,.5),rgba(75,79,208,.16) 55%,transparent 72%);
+  animation:ct-pulse 6s ease-in-out infinite}
+@keyframes ct-pulse{50%{opacity:.7;transform:scale(1.06)}}
+.ct-floor{position:absolute;left:12%;right:12%;bottom:5%;height:8%;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(154,123,242,.65),transparent 70%)}
+
+/* orbit ring with a travelling light */
+.ct-ring{position:absolute;left:50%;top:90%;width:118%;aspect-ratio:1;margin:-59% 0 0 -59%;border-radius:50%;
+  border:1.5px dashed rgba(196,181,253,.45);transform:translateZ(-80px) rotateX(74deg);
+  animation:ct-sp 24s linear infinite;pointer-events:none}
+.ct-ring::after{content:"";position:absolute;left:50%;top:-6px;width:12px;height:12px;margin-left:-6px;border-radius:50%;
+  background:#E0D7FF;box-shadow:0 0 16px 5px rgba(196,181,253,.85)}
+@keyframes ct-sp{to{transform:translateZ(-80px) rotateX(74deg) rotateZ(360deg)}}
+
+/* motion per layer */
+.ct-drift{animation:ct-drift 9s ease-in-out infinite}
+@keyframes ct-drift{50%{transform:translate(-6px,-6px) scale(1.015)}}
+
+.ct-breathe{transform-origin:50% 95%;filter:drop-shadow(0 22px 24px rgba(10,8,40,.55));
+  animation:ct-breathe 4.5s ease-in-out infinite}
+@keyframes ct-breathe{50%{transform:scale(1.004,1.014) translateY(-3px)}}
+
+.ct-bob{transform-origin:var(--o,50% 50%);filter:drop-shadow(0 16px 18px rgba(10,8,40,.45));
+  animation:ct-bob var(--t,5s) ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes ct-bob{
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(var(--y,-10px)) rotate(3deg)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ct-drift,.ct-breathe,.ct-bob,.ct-ring,.ct-glow{animation:none}
+}

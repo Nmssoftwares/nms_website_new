@@ -1,0 +1,97 @@
+/* Admin panel: sidebar theme switch + dark mode.
+   The <html> tag gets class "admin-dark" (dark) or "mode-light" (light) from the switch. */
+
+/* ---------- the switch in the sidebar ---------- */
+.theme-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:10px 13px;border-radius:12px;border:1px solid var(--line)}
+.theme-row .tl{display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:500;color:var(--slate)}
+.theme-row .tl svg{width:17px;height:17px;flex:none}
+.theme-toggle{position:relative;flex:none;width:54px;height:30px;padding:0;border-radius:999px;border:1px solid var(--line);cursor:pointer;
+  background:#E9E6FB;transition:background .3s,border-color .3s}
+.theme-toggle .thumb{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--nm-a),var(--nm-b));box-shadow:0 6px 12px -6px var(--nm-a);transition:transform .32s cubic-bezier(.3,1.4,.5,1)}
+.theme-toggle .thumb svg{position:absolute;width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .25s,transform .35s}
+.theme-toggle .ic-moon{opacity:0;transform:rotate(-60deg) scale(.6)}
+.theme-toggle[aria-checked="true"]{background:#2A2C5C;border-color:rgba(154,123,242,.5)}
+.theme-toggle[aria-checked="true"] .thumb{transform:translateX(24px)}
+.theme-toggle[aria-checked="true"] .ic-sun{opacity:0;transform:rotate(60deg) scale(.6)}
+.theme-toggle[aria-checked="true"] .ic-moon{opacity:1;transform:none}
+.theme-toggle:focus-visible{outline:3px solid var(--ring);outline-offset:2px}
+.theme-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);z-index:50;padding:11px 18px;border-radius:12px;font-size:.88rem;font-weight:500;
+  color:#fff;background:#1E2040;border:1px solid rgba(154,123,242,.5);box-shadow:0 18px 36px -18px #000;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
+.theme-toast.show{opacity:1;transform:translate(-50%,0)}
+.theme-toast.err{background:#7F1D1D;border-color:#F87171}
+/* a short fade whenever the theme flips */
+html.theme-anim *,html.theme-anim *::before,html.theme-anim *::after{transition:background-color .35s,color .35s,border-color .35s,box-shadow .35s !important}
+@media (max-width:860px){.theme-row{margin-top:8px;padding:6px 10px}.theme-row .tl span{display:none}}
+
+/* ---------- dark mode ---------- */
+html.admin-dark{color-scheme:dark;--bg:#14152B;--ink:#EDEBFF;--slate:#B3AED6;--line:rgba(154,123,242,.24);--ring:rgba(154,123,242,.32);--shadow:0 20px 40px -28px #000}
+html.admin-dark body{color:var(--ink);
+  background:radial-gradient(900px 420px at 100% -8%,rgba(154,123,242,.14),transparent 60%),radial-gradient(700px 400px at 0% 110%,rgba(91,76,219,.12),transparent 60%),var(--bg)}
+html.admin-dark .sidebar{background:#1A1B38}
+html.admin-dark table,html.admin-dark form.card,html.admin-dark .msg-card,html.admin-dark .st-card{background:#1E2040}
+html.admin-dark th{background:#252750;color:var(--slate)}
+html.admin-dark tbody tr:hover,html.admin-dark tr.unread td{background:rgba(154,123,242,.1)}
+html.admin-dark .btn-outline{background:transparent;color:var(--ink)}
+html.admin-dark .btn-outline:hover{color:#fff;border-color:var(--nm-b)}
+html.admin-dark .btn-danger{background:rgba(220,38,38,.2);color:#FCA5A5}
+html.admin-dark .btn-danger:hover{background:rgba(220,38,38,.32)}
+html.admin-dark .logout-btn:hover{background:rgba(220,38,38,.18);color:#FCA5A5}
+html.admin-dark .flash{background:rgba(16,185,129,.14);border-color:rgba(52,211,153,.5);color:#A7F3D0}
+html.admin-dark .err{color:#FCA5A5}
+html.admin-dark .thumb-img,html.admin-dark .thumb,html.admin-dark .cur-img{border-color:var(--line)}
+html.admin-dark td span[style*="#10B981"]{background:rgba(16,185,129,.16)}
+html.admin-dark td span[style*="#F59E0B"]{background:rgba(245,158,11,.16)}
+
+/* form fields */
+html.admin-dark form.card input[type=text],html.admin-dark form.card input[type=email],html.admin-dark form.card input[type=url],
+html.admin-dark form.card input[type=number],html.admin-dark form.card input[type=password],html.admin-dark form.card input[type=datetime-local],
+html.admin-dark form.card select,html.admin-dark form.card textarea,html.admin-dark .th-select{background:rgba(10,8,34,.55);color:var(--ink);border-color:var(--line)}
+html.admin-dark form.card input::placeholder,html.admin-dark form.card textarea::placeholder{color:#8E8ABB}
+html.admin-dark form.card input:hover,html.admin-dark form.card textarea:hover,html.admin-dark form.card select:hover{border-color:rgba(154,123,242,.5)}
+html.admin-dark form.card input:focus,html.admin-dark form.card textarea:focus,html.admin-dark form.card select:focus{background:rgba(10,8,34,.85);border-color:var(--nm-b)}
+html.admin-dark form.card select option,html.admin-dark .th-select option{background:#1E2040;color:#fff}
+html.admin-dark form.card input[type=file],html.admin-dark .st-file{background:rgba(10,8,34,.5);border-color:rgba(154,123,242,.4)}
+html.admin-dark form.card input[type=file]:hover,html.admin-dark .st-file:hover{background:rgba(154,123,242,.12);border-color:var(--nm-b)}
+html.admin-dark .msg-body{background:rgba(10,8,34,.5)}
+
+/* settings page */
+html.admin-dark .logo-prev{background:repeating-conic-gradient(#2A2C55 0 25%,#1E2040 0 50%) 0 0/16px 16px}
+html.admin-dark .bg-prev{background:#1A1B38}
+html.admin-dark .seg{background:rgba(10,8,34,.55)}
+html.admin-dark .seg input:checked + span{background:#2E2F66;color:#fff;box-shadow:0 4px 12px -6px rgba(0,0,0,.6)}
+html.admin-dark .srow output{background:rgba(154,123,242,.18);color:#E4E0FF}
+html.admin-dark .th-preset{background:rgba(10,8,34,.5);color:var(--ink);border-color:var(--line)}
+html.admin-dark .th-pick input[type=color],html.admin-dark .hh-colour input[type=color]{background:rgba(10,8,34,.55);border-color:var(--line)}
+html.admin-dark .th-prev{background:rgba(10,8,34,.5)}
+html.admin-dark .th-prev h3{color:#fff}
+html.admin-dark .th-prev p{color:#B3AED6}
+
+/* dashboard cards */
+html.admin-dark .dash-card{background:#1E2040;border-color:var(--line)}
+
+@media (prefers-reduced-motion:reduce){
+  .theme-toggle,.theme-toggle .thumb,.theme-toggle .thumb svg,.theme-toast{transition:none}
+}
+/* ---------- Sidebar polish: groups, icon tiles, profile chip ---------- */
+.sidebar nav{gap:2px;}
+.nav-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);opacity:.65;padding:18px 13px 6px;}
+.nav-label:first-child{padding-top:2px;}
+
+.sidebar nav a{padding:8px 11px;gap:12px;}
+.sidebar nav a svg{width:32px;height:32px;padding:7px;border-radius:10px;flex:none;opacity:1;
+  background:color-mix(in srgb,var(--nm-a) 10%,transparent);color:var(--nm-a);transition:background .18s,color .18s,transform .18s;}
+.sidebar nav a:hover svg{background:color-mix(in srgb,var(--nm-a) 18%,transparent);transform:scale(1.06);}
+.sidebar nav a.active svg{background:rgba(255,255,255,.22);color:#fff;}
+
+.side-user{display:flex;align-items:center;gap:11px;margin-top:14px;padding:10px 12px;border-radius:14px;
+  border:1px solid var(--line);background:color-mix(in srgb,var(--nm-a) 5%,transparent);}
+.side-user .av{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--nm-a),var(--nm-b));color:#fff;font-weight:700;font-size:.9rem;}
+.side-user .who{display:flex;flex-direction:column;font-size:.86rem;font-weight:600;line-height:1.25;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.side-user .who small{font-weight:500;font-size:.72rem;color:var(--slate);}
+
+@media (max-width:860px){
+  .nav-label,.side-user{display:none;}
+  .sidebar nav a svg{width:24px;height:24px;padding:4px;border-radius:8px;}
+}

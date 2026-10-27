@@ -1,0 +1,156 @@
+/* LIGHT MODE. Active only when <html class="mode-light"> (chosen in Admin -> Settings).
+   Every rule starts with html.mode-light so it beats the dark rules. */
+
+/* ---------- section backgrounds ---------- */
+html.mode-light .dz{background:#F2F0FF}
+html.mode-light .dz.dz2{background:#E9E5FF}
+html.mode-light .dzr{color:#3B3760}
+html.mode-light .dzr .sec-head h2,html.mode-light .dzr h3{color:#1B1740}
+html.mode-light .dzr .sec-head p{color:#5B5780}
+
+/* the moving dot-and-line network: darken so it shows on light */
+html.mode-light #abt-cv,html.mode-light #wwd-cv,html.mode-light #svc-cv,html.mode-light .net-cv{filter:brightness(.55) saturate(1.8)}
+
+/* ---------- About ---------- */
+html.mode-light .abt .abt-eyebrow{color:#5B4CDB}
+html.mode-light .abt h2.abt-title{color:#1B1740}
+html.mode-light .abt .abt-grad{background-image:linear-gradient(90deg,#5B4CDB,#8B7CF6,#0EA5E9,#5B4CDB);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+html.mode-light .abt .abt-lead{color:#3B3760}
+html.mode-light .abt h3.abt-sub{color:#1B1740}
+html.mode-light .abt .abt-txt{color:#4B4770}
+html.mode-light .abt .abt-list li{color:#1B1740;background:rgba(255,255,255,.88);border-color:rgba(107,92,231,.28);box-shadow:0 14px 26px -18px rgba(91,76,219,.5)}
+html.mode-light .abt .abt-ring{border-color:rgba(107,92,231,.4)}
+
+/* ---------- What we do ---------- */
+html.mode-light .wwd-sec .sec-head h2{color:#1B1740}
+html.mode-light .wwd-sec .sec-head p{color:#5B5780}
+html.mode-light .wwd .wwd-card{color:#1B1740;background:linear-gradient(150deg,rgba(255,255,255,.96),rgba(240,236,255,.92));border-color:rgba(107,92,231,.25);box-shadow:0 24px 40px -28px rgba(91,76,219,.55)}
+html.mode-light .wwd .wwd-card:hover{border-color:rgba(107,92,231,.6);box-shadow:0 34px 50px -28px rgba(91,76,219,.7)}
+html.mode-light .wwd .wwd-card h3{color:#1B1740}
+html.mode-light .wwd .wwd-card p{color:#4B4770}
+html.mode-light .wwd .wwd-go{color:#5B4CDB}
+html.mode-light .wwd .wwd-go:hover{color:#1B1740}
+html.mode-light .wwd .wwd-n{-webkit-text-stroke-color:rgba(107,92,231,.35)}
+html.mode-light .wwd .wwd-fx::before{background-image:linear-gradient(rgba(107,92,231,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(107,92,231,.09) 1px,transparent 1px)}
+html.mode-light .wwd .wwd-chip span{color:#3B3760;background:rgba(255,255,255,.92);border-color:rgba(107,92,231,.3);box-shadow:0 12px 24px -16px rgba(91,76,219,.5)}
+html.mode-light .wwd .wwd-chip:hover span{color:#fff;border-color:transparent;background:linear-gradient(90deg,var(--nm-a,#6B5CE7),var(--nm-b,#9A7BF2));box-shadow:0 16px 30px -12px rgba(107,92,231,.8)}
+
+/* ---------- Services ---------- */
+html.mode-light #services .sec-head h2{color:#1B1740}
+html.mode-light #services .sec-head p{color:#5B5780}
+html.mode-light .sv-intro p{color:#3B3760}
+html.mode-light .sv-badges span{color:#3B3760;background:rgba(107,92,231,.1);border-color:rgba(107,92,231,.35)}
+html.mode-light .sv3-ring{border-color:rgba(107,92,231,.4)}
+html.mode-light .sx-tab{background:rgba(255,255,255,.85);border-color:rgba(107,92,231,.25)}
+html.mode-light .sx-tab:hover{background:#fff}
+html.mode-light .sx-tab[aria-selected="true"]{background:linear-gradient(150deg,#fff,#EEE9FF);border-color:var(--nm-b,#9A7BF2);box-shadow:0 20px 34px -22px rgba(91,76,219,.6)}
+html.mode-light .sx-ti{color:#5B4CDB;background:rgba(107,92,231,.12)}
+html.mode-light .sx-tab:hover .sx-ti{background:rgba(107,92,231,.2)}
+html.mode-light .sx-tt{color:#3B3760}
+html.mode-light .sx-tab[aria-selected="true"] .sx-tt{color:#1B1740}
+html.mode-light .sx-nav{background:rgba(255,255,255,.85);border-color:rgba(107,92,231,.3)}
+html.mode-light .sx-count{color:#5B5780}
+html.mode-light .sx-count b{color:#1B1740}
+html.mode-light .sx-prev,html.mode-light .sx-next{background:rgba(107,92,231,.14);color:#3B3760}
+html.mode-light .sx-stage{background:linear-gradient(150deg,rgba(255,255,255,.97),rgba(238,233,255,.93));border-color:rgba(107,92,231,.35);box-shadow:0 40px 60px -36px rgba(91,76,219,.55)}
+html.mode-light .sx-fx::before{border-color:rgba(107,92,231,.25)}
+html.mode-light .sx-fx::after{background-image:linear-gradient(rgba(107,92,231,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(107,92,231,.08) 1px,transparent 1px)}
+html.mode-light .sx-head h3{color:#1B1740}
+html.mode-light .sx-kicker{color:#5B4CDB}
+html.mode-light .sx-desc{color:#3B3760}
+html.mode-light .sx-sub{color:#6A6690}
+html.mode-light .sx-mark{-webkit-text-stroke-color:rgba(107,92,231,.18)}
+html.mode-light .sx-points li{color:#1B1740;background:rgba(255,255,255,.92);border-color:rgba(107,92,231,.3);box-shadow:none}
+html.mode-light .sx-btn.ghost{color:#3B3760;border-color:rgba(107,92,231,.5)}
+html.mode-light .sx-btn.ghost:hover{background:rgba(107,92,231,.12)}
+html.mode-light .sx-vis{background:rgba(255,255,255,.88);border-color:rgba(107,92,231,.3);box-shadow:0 30px 44px -22px rgba(91,76,219,.45)}
+html.mode-light .v-road::before{background:rgba(107,92,231,.3)}
+html.mode-light .v-road i{background:#fff;border-color:#6B5CE7}
+html.mode-light .v-dot{background:#6B5CE7;box-shadow:0 0 0 6px rgba(107,92,231,.2)}
+html.mode-light .v-chart{border-bottom-color:rgba(107,92,231,.3)}
+html.mode-light .v-chart i{background:linear-gradient(180deg,#9A7BF2,#5B4CDB)}
+html.mode-light .v-cloud svg{fill:rgba(107,92,231,.15);stroke:#6B5CE7}
+html.mode-light .v-cloud b{background:#6B5CE7}
+html.mode-light .v-nl line{stroke:rgba(107,92,231,.4)}
+html.mode-light .v-nn circle{fill:#6B5CE7}
+html.mode-light .v-gear .t,html.mode-light .v-gear .r{stroke:#6B5CE7}
+html.mode-light .v-gear .h{fill:#5B4CDB}
+
+/* ---------- Projects / Testimonials / Team / Blog / Contact cards ---------- */
+html.mode-light .dzr .fp-card,html.mode-light .dzr .tm-card,html.mode-light .dzr .blog-card,
+html.mode-light .dzr .contact-item,html.mode-light .dzr .contact-form,
+html.mode-light #testimonials.dzr .nmt-card{
+  background:linear-gradient(150deg,#fff,#F5F2FF);border-color:rgba(107,92,231,.22);
+  box-shadow:0 18px 34px -22px rgba(91,76,219,.5);color:#3B3760;
+}
+html.mode-light .dzr .fp-card:hover,html.mode-light .dzr .tm-card:hover,html.mode-light .dzr .blog-card:hover,
+html.mode-light .dzr .contact-item:hover,html.mode-light #testimonials.dzr .nmt-card:hover{
+  border-color:var(--nm-a);box-shadow:0 26px 44px -22px rgba(91,76,219,.6);
+}
+
+/* Projects */
+html.mode-light .dzr .fp-media{background:rgba(107,92,231,.1)}
+html.mode-light .dzr .fp-media--skel{background:linear-gradient(135deg,rgba(107,92,231,.14),rgba(14,165,233,.1))}
+html.mode-light .dzr .fp-skel-icon{stroke:rgba(107,92,231,.45)}
+html.mode-light .dzr .fp-body p{color:#4B4770}
+html.mode-light .dzr .fp-stack span{color:#5B4CDB;background:rgba(107,92,231,.1);border-color:rgba(107,92,231,.3)}
+html.mode-light .dzr .fp-link{color:#5B4CDB}
+html.mode-light .dzr .sk-title,html.mode-light .dzr .sk-line,html.mode-light .dzr .sk-pill{background:rgba(107,92,231,.12)}
+
+/* Testimonials */
+html.mode-light #testimonials.dzr .nmt-q{color:rgba(107,92,231,.14)}
+html.mode-light #testimonials.dzr .nmt-text{color:#2B2750}
+html.mode-light #testimonials.dzr .nmt-name{color:#1B1740}
+html.mode-light #testimonials.dzr .nmt-role{color:#6A6690}
+html.mode-light #testimonials.dzr .nmt-who{border-top-color:rgba(107,92,231,.22)}
+html.mode-light #testimonials.dzr .nmt-card.is-featured{
+  background:linear-gradient(160deg,var(--nm-a),color-mix(in srgb,var(--nm-b) 45%,#1a1040));
+  border-color:transparent;box-shadow:0 30px 56px -28px rgba(91,76,219,.7);
+}
+
+/* Team */
+html.mode-light .dzr .tm-photo .tm-inner{border-color:#fff}
+html.mode-light .dzr .tm-role{color:#5B4CDB;background:rgba(107,92,231,.1);border-color:rgba(107,92,231,.3)}
+html.mode-light .dzr .tm-bio{color:#4B4770}
+html.mode-light .dzr .tm-social{border-top-color:rgba(107,92,231,.2)}
+html.mode-light .dzr .tm-social a{color:#5B4CDB;background:rgba(107,92,231,.1)}
+html.mode-light .dzr .tm-social a:hover{color:#fff;background:linear-gradient(135deg,var(--nm-a),var(--nm-b))}
+
+/* Blog */
+html.mode-light .dzr .blog-card .date{color:#6A6690}
+html.mode-light .dzr .blog-card p{color:#4B4770}
+html.mode-light .dzr .blog-card .read{color:#5B4CDB}
+html.mode-light .dzr .blog-empty{color:#4B4770}
+html.mode-light .dzr .blog-more a{color:#5B4CDB}
+
+/* Contact */
+html.mode-light .ct-ring{border-color:rgba(107,92,231,.4)}
+html.mode-light .dzr .c-label{color:#6A6690}
+html.mode-light .dzr .ci-text strong{color:#1B1740}
+html.mode-light .dzr .ci-arrow{color:#5B4CDB}
+html.mode-light .dzr .cf-sub{color:#4B4770}
+html.mode-light .dzr .contact-form label{color:#2B2750}
+html.mode-light .dzr .contact-form input,html.mode-light .dzr .contact-form select,html.mode-light .dzr .contact-form textarea{
+  background:#F8F7FF;border:1px solid rgba(107,92,231,.3);color:#1B1740}
+html.mode-light .dzr .contact-form input::placeholder,html.mode-light .dzr .contact-form textarea::placeholder{color:#8F8BB8}
+html.mode-light .dzr .contact-form input:focus,html.mode-light .dzr .contact-form select:focus,html.mode-light .dzr .contact-form textarea:focus{
+  background:#fff;border-color:var(--nm-b);box-shadow:0 0 0 4px rgba(14,165,233,.16)}
+html.mode-light .dzr .contact-form select option{background:#fff;color:#111}
+html.mode-light .dzr .contact-form .err{color:#E11D48}
+html.mode-light .dzr .contact-ok{background:rgba(14,165,233,.1);border-color:var(--nm-b);color:#0B4A6F}
+html.mode-light .dzr .contact-ok.is-error{background:#FFF1F2;border-color:#E11D48;color:#9F1239}
+
+/* ---------- Footer ---------- */
+html.mode-light body .nmf{color:#475569;
+  background:radial-gradient(700px 320px at 8% 0%,rgba(107,92,231,.18),transparent 65%),
+             radial-gradient(600px 300px at 95% 100%,rgba(14,165,233,.16),transparent 65%),#E6E1FF}
+html.mode-light body .nmf-logo{color:#2B3350}
+html.mode-light body .nmf h4{color:#181225}
+html.mode-light body .nmf-about,html.mode-light body .nmf-links a,html.mode-light body .nmf-contact a{color:#4F5A75}
+html.mode-light body .nmf-links a:hover,html.mode-light body .nmf-contact a:hover,html.mode-light body .nmf-bottom a:hover{color:var(--nm-a)}
+html.mode-light body .nmf-social a{color:var(--nm-a);background:#fff;border-color:#CFC6F8;box-shadow:0 4px 10px -6px rgba(91,76,219,.35)}
+html.mode-light body .nmf-social a:hover{color:#fff}
+html.mode-light body .nmf-chip{color:var(--nm-a);background:rgba(107,92,231,.12);border-color:rgba(107,92,231,.28)}
+html.mode-light body .nmf-bottom{color:#56617D;border-top-color:#CFC6F8}
+html.mode-light body .nmf-top{background:#fff;border-color:#CFC6F8}
+html.mode-light body .nmf-top:hover{background:#EDE8FF}
