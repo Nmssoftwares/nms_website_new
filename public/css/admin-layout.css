@@ -38,25 +38,106 @@ a.brand-row{text-decoration:none;}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 20px;border-radius:11px;font-weight:600;font-size:.9rem;line-height:1.2;
   text-decoration:none;border:0;cursor:pointer;font-family:inherit;transition:transform .15s,box-shadow .15s,border-color .15s,color .15s;}
-.btn.btn-sm{padding:8px
-/* ---------- Dashboard ---------- */
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;}
-.stat-link{text-decoration:none;color:inherit;}
-.stat-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;}
-.stat-num{font-size:2rem;font-weight:700;font-family:'Space Grotesk',sans-serif;}
-.stat-lbl{color:var(--slate);font-size:.9rem;margin-top:4px;}
-.btn-row{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap;}
-@media (max-width:700px){.stat-grid{grid-template-columns:1fr;}}
 
-/* ---------- Small helpers ---------- */
-a.brand-row{text-decoration:none;}
 .btn.btn-sm{padding:8px 14px;}
-.cell-empty{text-align:center;color:var(--slate);}
-.field-hint{font-size:.8rem;color:var(--slate);margin-top:4px;}
-form.card textarea.textarea-lg{min-height:240px;}
 
-/* Published / Draft pill (replaces the old style-attribute trick) */
+/* ---------- Buttons: colours ---------- */
+.btn-primary{background:linear-gradient(90deg,var(--nm-a),var(--nm-b));color:#fff;box-shadow:0 12px 22px -14px var(--nm-a);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 26px -14px var(--nm-a);}
+.btn-outline{background:#fff;color:var(--nm-a);border:1.5px solid var(--line);}
+.btn-outline:hover{transform:translateY(-2px);border-color:var(--nm-a);}
+.btn-danger{background:#FEF2F2;color:#DC2626;}
+.btn-danger:hover{background:#FEE2E2;}
+.btn:focus-visible,.btn-outline:focus-visible,.btn-danger:focus-visible{outline:3px solid var(--ring);outline-offset:2px;}
+
+/* small buttons used inside tables (they have no .btn class) */
+.btn-outline:not(.btn),.btn-danger:not(.btn){
+  display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:10px;
+  font-family:inherit;font-weight:600;font-size:.84rem;line-height:1.2;text-decoration:none;cursor:pointer;
+  transition:transform .15s,background .15s,border-color .15s;
+}
+.btn-danger:not(.btn){border:0;}
+
+/* ---------- Flash message ---------- */
+.flash{display:flex;align-items:center;gap:10px;margin-bottom:22px;padding:13px 16px;border-radius:12px;font-size:.9rem;font-weight:500;
+  background:#ECFDF5;border:1px solid #A7F3D0;color:#047857;}
+.flash svg{width:18px;height:18px;flex:none;}
+
+/* ---------- Tables (list pages) ---------- */
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);}
+th{padding:13px 16px;text-align:left;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);
+  background:#F6F8FE;border-bottom:1px solid var(--line);}
+td{padding:14px 16px;font-size:.92rem;vertical-align:middle;border-bottom:1px solid var(--line);}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr{transition:background .15s;}
+tbody tr:hover{background:color-mix(in srgb,var(--nm-a) 5%,transparent);}
+th:first-child,td:first-child{width:88px;}
+.cell-empty,.empty-row{text-align:center;color:var(--slate);padding:34px 16px;}
+
+/* picture in the first column */
+table .thumb{display:block;width:64px;height:44px;object-fit:cover;border-radius:10px;border:1px solid var(--line);
+  background:linear-gradient(135deg,color-mix(in srgb,var(--nm-a) 18%,transparent),color-mix(in srgb,var(--nm-b) 18%,transparent));}
+
+/* Edit / Delete buttons on the right */
+.actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;}
+.actions form{margin:0;}
+
+/* Published / Draft pill */
 .status{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border-radius:999px;font-size:.78rem;font-weight:600;}
 .status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;}
-.status-live{color:#10B981;background:#ECFDF5;}
-.status-draft{color:#F59E0B;background:#FFFBEB;}
+.status-ok,.status-live{color:#059669;background:#ECFDF5;}
+.status-draft{color:#D97706;background:#FFFBEB;}
+
+/* ---------- Forms (create / edit pages) ---------- */
+form.card{max-width:780px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow);}
+.field{margin-bottom:22px;}
+.field label{display:block;margin-bottom:7px;font-size:.86rem;font-weight:600;color:var(--ink);}
+form.card input[type=text],form.card input[type=email],form.card input[type=url],form.card input[type=number],
+form.card input[type=password],form.card input[type=datetime-local],form.card select,form.card textarea{
+  width:100%;padding:12px 14px;font:inherit;font-size:.94rem;color:var(--ink);background:#fff;
+  border:1.5px solid var(--line);border-radius:11px;outline:0;transition:border-color .15s,box-shadow .15s,background .15s;
+}
+form.card textarea{min-height:110px;resize:vertical;line-height:1.55;}
+form.card textarea.textarea-tall{min-height:300px;}
+form.card input:hover,form.card textarea:hover,form.card select:hover{border-color:color-mix(in srgb,var(--nm-a) 40%,var(--line));}
+form.card input:focus,form.card textarea:focus,form.card select:focus{border-color:var(--nm-b);box-shadow:0 0 0 4px var(--ring);}
+form.card input[type=file]{width:100%;padding:12px;font:inherit;font-size:.88rem;color:var(--slate);background:#F6F8FE;border:1.5px dashed var(--line);border-radius:11px;cursor:pointer;}
+form.card input[type=file]::file-selector-button{margin-right:12px;padding:8px 14px;border:0;border-radius:9px;cursor:pointer;font:inherit;font-weight:600;font-size:.84rem;
+  color:#fff;background:linear-gradient(90deg,var(--nm-a),var(--nm-b));}
+.err{margin-top:6px;font-size:.82rem;font-weight:500;color:#DC2626;}
+.field-note,.field-hint{margin-top:6px;font-size:.8rem;color:var(--slate);}
+.cur-img{display:block;width:100%;max-width:260px;max-height:160px;object-fit:cover;margin-bottom:12px;border-radius:12px;border:1px solid var(--line);}
+form.card > .btn{margin:6px 10px 0 0;}
+
+/* ---------- Messages ---------- */
+tr.unread td{font-weight:600;background:color-mix(in srgb,var(--nm-a) 5%,transparent);}
+.dot{display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:var(--nm-b);box-shadow:0 0 0 3px var(--ring);vertical-align:middle;}
+.row-link{color:var(--ink);font-weight:600;text-decoration:none;}
+.row-link:hover{color:var(--nm-a);}
+.nav-badge{margin-left:auto;min-width:22px;padding:2px 7px;border-radius:999px;font-size:.72rem;font-weight:700;text-align:center;color:#fff;background:#EF4444;}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:18px;font-size:.88rem;color:var(--slate);}
+.pager a{color:var(--nm-a);font-weight:600;text-decoration:none;}
+
+.msg-card{max-width:780px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow);}
+.msg-meta{display:grid;grid-template-columns:110px 1fr;gap:10px 16px;margin:0 0 24px;}
+.msg-meta dt{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);}
+.msg-meta dd{margin:0;font-size:.94rem;word-break:break-word;}
+.msg-meta a{color:var(--nm-a);text-decoration:none;font-weight:500;}
+.msg-body{padding:18px 20px;border-radius:13px;background:#F6F8FE;border:1px solid var(--line);white-space:pre-wrap;line-height:1.65;font-size:.95rem;}
+.msg-actions{justify-content:flex-start;margin-top:24px;}
+
+/* ---------- Dark mode extras (the rest lives in admin-theme.css) ---------- */
+html.admin-dark .status-ok,html.admin-dark .status-live{background:rgba(16,185,129,.16);color:#6EE7B7;}
+html.admin-dark .status-draft{background:rgba(245,158,11,.16);color:#FCD34D;}
+html.admin-dark form.card input[type=file]::file-selector-button{color:#fff;}
+html.admin-dark .row-link{color:var(--ink);}
+html.admin-dark .msg-meta a,html.admin-dark .pager a{color:#9CC4FF;}
+
+/* ---------- Small screens ---------- */
+@media (max-width:860px){
+  .main{padding:22px 16px 48px;}
+  table{display:block;overflow-x:auto;white-space:nowrap;}
+  form.card,.msg-card{padding:20px;}
+  .msg-meta{grid-template-columns:1fr;gap:4px;}
+  .msg-meta dd{margin-bottom:10px;}
+}

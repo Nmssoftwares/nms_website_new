@@ -20,10 +20,19 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
+        $demos = array_keys(Setting::demoImages());
+
         $request->validate([
-            'logo'          => 'nullable|image|max:2048',
+            'logo_dark'     => 'nullable|image|max:2048',
+            'logo_light'    => 'nullable|image|max:2048',
+            'logo_header_h' => 'nullable|integer|min:20|max:120',
+            'logo_footer_h' => 'nullable|integer|min:20|max:140',
+            'logo_admin_h'  => 'nullable|integer|min:20|max:80',
             'bg_image'      => 'nullable|image|max:6144',
             'remove_bg'     => 'nullable|boolean',
+            'bg_mode'       => ['required', Rule::in(Setting::BG_MODES)],
+            'bg_dark_demo'  => ['nullable', Rule::in($demos)],
+            'bg_light_demo' => ['nullable', Rule::in($demos)],
             'bg_fit'        => 'required|in:cover,contain,stretch',
             'bg_position'   => 'required|in:top,center,bottom',
             'bg_blur'       => 'required|integer|min:0|max:12',
@@ -42,16 +51,38 @@ class SettingController extends Controller
 
         $setting = Setting::current();
 
-        if ($path = $this->replaceUpload($request, 'logo', 'settings', $setting->logo_path)) {
-            $setting->logo_path = $path;
+        // ---- Logos: one per mode ----
+        foreach (['dark', 'light'] as $m) {
+            $col = "logo_{$m}_path";
+            if ($path = $this->replaceUpload($request, "logo_{$m}", 'settings', $setting->$col)) {
+                $setting->$col = $path;
+            }
         }
+
+        // ---- Logo sizes (height in px) ----
+        foreach (['header', 'footer', 'admin'] as $where) {
+            $col = "logo_{$where}_h";
+            $setting->$col = $request->filled($col) ? (int) $request->input($col) : null;
+        }
+
+        // ---- Background: gallery photo per mode, or one uploaded photo, or none ----
+        $mode = $request->input('bg_mode');
 
         if ($path = $this->replaceUpload($request, 'bg_image', 'settings', $setting->bg_image_path)) {
             $setting->bg_image_path = $path;
+            $mode = 'upload'; // a freshly chosen photo always wins
         } elseif ($request->boolean('remove_bg')) {
             $this->deleteUpload($setting->bg_image_path);
             $setting->bg_image_path = null;
         }
+
+        if ($mode === 'upload' && ! $setting->bg_image_path) {
+            $mode = 'demo'; // nothing uploaded, so use the gallery
+        }
+
+        $setting->bg_mode       = $mode;
+        $setting->bg_dark_demo  = $request->input('bg_dark_demo')  ?: $setting->bg_dark_demo;
+        $setting->bg_light_demo = $request->input('bg_light_demo') ?: $setting->bg_light_demo;
 
         $setting->bg_fit        = $request->input('bg_fit');
         $setting->bg_position   = $request->input('bg_position');

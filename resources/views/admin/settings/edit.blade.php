@@ -23,23 +23,61 @@
   {{-- ===== Logo ===== --}}
   <section class="st-card">
     <h2>Site Logo</h2>
-    <p class="hint">Shown in the website header and footer, the admin sidebar and the login card. A PNG with a transparent background works best.</p>
+    <p class="hint">One logo for each mode. The website, admin sidebar and login card use the one that matches the Dark / Light switch. A PNG with a transparent background works best: light lettering for dark mode, dark lettering for light mode.</p>
 
-    <div class="logo-prev" id="logoPrev">
-      @if($setting->logoUrl())
-        <img src="{{ $setting->logoUrl() }}" alt="Current logo" id="logoImg">
+    <span class="st-label">Dark mode logo</span>
+    <div class="logo-prev" id="logoPrev" style="background:#14152B;">
+      @if($setting->logoUrl('dark'))
+        <img src="{{ $setting->logoUrl('dark') }}" alt="Dark mode logo" id="logoImg">
       @else
-        <em id="logoEmpty">No logo yet — the text logo is showing.</em>
+        <em id="logoEmpty" style="color:#B3AED6;">No logo yet — the text logo is showing.</em>
       @endif
     </div>
-
     <label class="st-file">
-      <input type="file" name="logo" id="logoInput" accept="image/*">
+      <input type="file" name="logo_dark" id="logoInput" accept="image/*">
       <span class="ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
-      <span><b>Choose logo file</b><span class="sub">PNG, JPG or WebP · up to 2 MB</span></span>
+      <span><b>Choose dark mode logo</b><span class="sub">PNG, JPG or WebP · up to 2 MB</span></span>
     </label>
     <div class="fname" id="logoName"></div>
-    @error('logo')<div class="err">{{ $message }}</div>@enderror
+    @error('logo_dark')<div class="err">{{ $message }}</div>@enderror
+
+    <span class="st-label" style="margin-top:22px;display:block;">Light mode logo</span>
+    <div class="logo-prev" style="background:#fff;">
+      <img src="{{ $setting->logoUrl('light') }}" alt="Light mode logo" id="logoLightImg" @if(!$setting->logoUrl('light')) style="display:none" @endif>
+    </div>
+    <label class="st-file">
+      <input type="file" name="logo_light" id="logoLightInput" accept="image/*">
+      <span class="ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
+      <span><b>Choose light mode logo</b><span class="sub">PNG, JPG or WebP · up to 2 MB</span></span>
+    </label>
+    <div class="fname" id="logoLightName"></div>
+    @error('logo_light')<div class="err">{{ $message }}</div>@enderror
+
+    {{-- Logo size --}}
+    @php
+      $logoRows = [
+        'header' => ['Website header', 'Logo in the top menu bar'],
+        'footer' => ['Website footer', 'Logo at the bottom of the site'],
+        'admin'  => ['Admin &amp; login', 'Sidebar logo and the sign-in card'],
+      ];
+    @endphp
+    <div class="prev-head prev-head--14" style="margin-top:26px;">
+      <span class="st-label st-label--flush">Logo size (height in pixels)</span>
+      <button type="button" class="linkbtn" id="resetLogoSize">Reset to defaults</button>
+    </div>
+    <div class="sliders">
+      @foreach($logoRows as $k => $row)
+        @php [$min, $max, $def] = \App\Models\Setting::LOGO_SIZES[$k]; @endphp
+        <div class="srow">
+          <div class="nm">{!! $row[0] !!}<small>{{ $row[1] }}</small></div>
+          <input type="range" name="logo_{{ $k }}_h" id="rLogo{{ ucfirst($k) }}" min="{{ $min }}" max="{{ $max }}" step="1" data-default="{{ $def }}"
+                 value="{{ old("logo_{$k}_h", $setting->logoSize($k)) }}">
+          <output id="oLogo{{ ucfirst($k) }}"></output>
+        </div>
+        @error("logo_{$k}_h")<div class="err">{{ $message }}</div>@enderror
+      @endforeach
+    </div>
+    <p class="hint" style="margin-top:12px;">The two previews above follow the header size. Nothing changes on the site until you click Save.</p>
   </section>
 
   {{-- ===== Background ===== --}}
@@ -65,6 +103,48 @@
       <div class="wash" id="bgWash"></div>
       <div class="fake"><i></i><i></i><i></i></div>
     </div>
+
+    <div class="st-block">
+      <span class="st-label">Background source</span>
+      <div class="seg">
+        @foreach(['demo' => 'Gallery photos', 'upload' => 'My own photo', 'plain' => 'No photo'] as $val => $label)
+          <label><input type="radio" name="bg_mode" value="{{ $val }}" @checked(old('bg_mode', $setting->bgMode()) === $val)><span>{{ $label }}</span></label>
+        @endforeach
+      </div>
+      @error('bg_mode')<div class="err">{{ $message }}</div>@enderror
+    </div>
+
+    @if(count(\App\Models\Setting::demoImages()))
+      @foreach(['dark' => 'Dark mode', 'light' => 'Light mode'] as $m => $title)
+        @php
+          // dark mode shows night/dark pictures, light mode shows day/light pictures
+          $otherKind = $m === 'dark' ? ['day', 'light'] : ['night', 'dark'];
+          $files = collect(\App\Models\Setting::demoImages())
+              ->reject(fn ($label, $file) => \Illuminate\Support\Str::startsWith(strtolower($file), $otherKind));
+
+          $picked = old("bg_{$m}_demo", $setting->bgDemo($m));
+          if (! $files->has($picked)) {
+              $picked = $files->keys()->first();   // saved choice belongs to the other mode: use the first one here
+          }
+        @endphp
+        <div class="st-block">
+          <span class="st-label">{{ $title }} photo (choose from gallery)</span>
+          <div class="bg-gallery">
+            @foreach($files as $file => $label)
+              @php $src = asset(\App\Models\Setting::DEMO_DIR . '/' . $file); @endphp
+              <label class="bg-pick">
+                <input type="radio" name="bg_{{ $m }}_demo" value="{{ $file }}" data-src="{{ $src }}" @checked($picked === $file)>
+                <img src="{{ $src }}" alt="{{ $label }}" loading="lazy">
+                <span>{{ $label }}</span>
+              </label>
+            @endforeach
+          </div>
+          @error("bg_{$m}_demo")<div class="err">{{ $message }}</div>@enderror
+        </div>
+      @endforeach
+    @else
+      <p class="hint">No gallery pictures yet. Add .jpg, .png or .webp files to <code>public/images/backgrounds/</code>.</p>
+    @endif
 
     <div class="st-block">
       <label class="st-file">
@@ -213,7 +293,7 @@
   {{-- ===== Header & hero text ===== --}}
   @php
     $hdr = old('header_style', $setting->headerStyle());
-    $hTxt = old('hero_text', $setting->heroText());
+    $hTxt = old('hero_text', $setting->heroTextSetting());
     $hCol = old('hero_text_color', $setting->heroTextColor());
   @endphp
 
@@ -312,6 +392,7 @@
       <div>
         <span class="st-label">Hero text colour</span>
         <div class="seg">
+          <label><input type="radio" name="hero_text" value="auto"   @checked($hTxt === 'auto')><span>Auto</span></label>
           <label><input type="radio" name="hero_text" value="dark"   @checked($hTxt === 'dark')><span>Dark text</span></label>
           <label><input type="radio" name="hero_text" value="light"  @checked($hTxt === 'light')><span>Light text</span></label>
           <label><input type="radio" name="hero_text" value="custom" @checked($hTxt === 'custom')><span>Custom</span></label>
@@ -398,7 +479,43 @@
     var img = document.getElementById('logoImg');
     if(!img){ img = document.createElement('img'); img.id = 'logoImg'; box.appendChild(img); }
     img.src = URL.createObjectURL(f);
+    logoSizes();
     document.getElementById('logoName').textContent = 'Selected: ' + f.name;
+  });
+
+  document.getElementById('logoLightInput').addEventListener('change', function(){
+    var f = this.files[0]; if(!f) return;
+    var img = document.getElementById('logoLightImg');
+    img.src = URL.createObjectURL(f); img.style.display = '';
+    logoSizes();
+    document.getElementById('logoLightName').textContent = 'Selected: ' + f.name;
+  });
+
+  /* logo size sliders: update the numbers and resize both logo previews (header size) */
+  var LOGO_RANGES = ['rLogoHeader', 'rLogoFooter', 'rLogoAdmin'];
+  function logoSizes(){
+    LOGO_RANGES.forEach(function(id){
+      var r = document.getElementById(id);
+      document.getElementById(id.replace('rLogo', 'oLogo')).textContent = r.value + 'px';
+    });
+    var h = document.getElementById('rLogoHeader').value + 'px';
+    ['logoImg', 'logoLightImg'].forEach(function(id){
+      var i = document.getElementById(id); if(!i) return;
+      i.style.height = h; i.style.width = 'auto'; i.style.maxHeight = 'none'; i.style.maxWidth = '100%';
+    });
+  }
+  LOGO_RANGES.forEach(function(id){ document.getElementById(id).addEventListener('input', logoSizes); });
+  document.getElementById('resetLogoSize').addEventListener('click', function(){
+    LOGO_RANGES.forEach(function(id){ var r = document.getElementById(id); r.value = r.dataset.default; });
+    logoSizes();
+  });
+  logoSizes();
+
+  document.querySelectorAll('.bg-gallery input[type=radio]').forEach(function(r){
+    r.addEventListener('change', function(){
+      layer.style.backgroundImage = "url('" + r.dataset.src + "')";
+      layer.style.display = 'block'; if(none) none.style.display = 'none';
+    });
   });
 
   apply();

@@ -25,7 +25,7 @@
             <div class="hx-stat"><div class="hx-num">20+</div><div class="hx-lbl">Happy clients</div></div>
             <div class="hx-stat"><div class="hx-num">5+</div><div class="hx-lbl">Global partnerships</div></div>
           </div>
-          <div class="hx-code">&gt; <em>deploy</em> --cloud --ai <u></u></div>
+          <div class="hx-code">&gt; <em>deploy</em> --devops --api --automation <u></u></div>
         </div>
         <div class="hx-chip hx-c3" aria-hidden="true"><div><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>Code</div></div>
         <div class="hx-chip hx-c4" aria-hidden="true"><div><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Secure</div></div>

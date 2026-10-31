@@ -10,7 +10,9 @@ class Setting extends Model
     private const CACHE_KEY = 'site.settings';
 
     protected $fillable = [
-        'logo_path', 'bg_image_path', 'bg_mode', 'bg_demo',
+        'logo_path', 'logo_dark_path', 'logo_light_path',
+        'logo_header_h', 'logo_footer_h', 'logo_admin_h',
+        'bg_image_path', 'bg_mode', 'bg_demo', 'bg_dark_demo', 'bg_light_demo',
         'bg_fit', 'bg_position', 'bg_blur',
         'bg_veil', 'bg_brightness', 'bg_saturation',
         'theme_a', 'theme_b', 'font_body', 'font_heading',
@@ -28,7 +30,14 @@ class Setting extends Model
     public const DEFAULT_FONTS = ['body' => 'Inter', 'heading' => 'Space Grotesk'];
 
     /** Hero text colour modes and header styles. */
-    public const HERO_TEXT = ['dark', 'light', 'custom'];
+    public const HERO_TEXT = ['auto', 'dark', 'light', 'custom'];
+
+    /** Logo height in pixels for each place: [min, max, default]. */
+    public const LOGO_SIZES = [
+        'header' => [20, 120, 36],   // website header
+        'footer' => [20, 140, 44],   // website footer
+        'admin'  => [20, 80, 40],    // admin sidebar + login card
+    ];
     public const HEADER_STYLES = ['light', 'dark'];
     public const SITE_MODES = ['dark', 'light'];
     public const BG_MODES = ['demo', 'upload', 'plain'];
@@ -82,11 +91,62 @@ class Setting extends Model
         return $this->{$key} ?? self::DEFAULTS[$key];
     }
 
-    public function logoUrl(): ?string
+    /** Seeded files live in public/ ; uploaded files live in storage/. */
+    private static function fileUrl(string $path): string
     {
-        return $this->logo_path
-            ? asset('storage/' . $this->logo_path)
-            : (is_file(public_path('logo.png')) ? asset('logo.png') : null);
+        return is_file(public_path($path)) ? asset($path) : asset('storage/' . $path);
+    }
+
+    private function modeOrCurrent(?string $mode): string
+    {
+        return in_array($mode, self::SITE_MODES, true) ? $mode : $this->siteMode();
+    }
+
+    /** Logo for 'dark' or 'light' (defaults to the current site mode). */
+    public function logoUrl(?string $mode = null): ?string
+    {
+        $mode = $this->modeOrCurrent($mode);
+        $path = $this->{'logo_' . $mode . '_path'} ?: $this->logo_path;
+
+        if ($path) {
+            return self::fileUrl($path);
+        }
+
+        return is_file(public_path('logo.png')) ? asset('logo.png') : null;
+    }
+
+    /** Logo height in px for 'header', 'footer' or 'admin' (saved value, kept inside its limits). */
+    public function logoSize(string $where): int
+    {
+        [$min, $max, $default] = self::LOGO_SIZES[$where];
+        $value = $this->{'logo_' . $where . '_h'} ?? null;
+
+        return is_numeric($value) ? max($min, min($max, (int) $value)) : $default;
+    }
+
+    /** CSS for the logo sizes. Only printed for places where a size was saved. */
+    private function logoCss(): string
+    {
+        $css = '';
+
+        if ($this->logo_header_h !== null) {
+            $h = $this->logoSize('header');
+            $css .= ".brand img{height:{$h}px !important;width:auto !important;}"
+                  . '@media(max-width:860px){.brand img{height:' . min($h, 48) . 'px !important;}}';
+        }
+
+        if ($this->logo_footer_h !== null) {
+            $h = $this->logoSize('footer');
+            $css .= ".nmf-logo img{height:{$h}px !important;width:auto !important;}";
+        }
+
+        if ($this->logo_admin_h !== null) {
+            $h = $this->logoSize('admin');
+            $css .= ".sidebar .brand-row img{height:{$h}px !important;width:auto !important;max-width:150px !important;}"
+                  . ".stage .logo img{height:{$h}px !important;width:auto !important;max-width:260px !important;}";
+        }
+
+        return $css;
     }
 
     /** Gallery pictures found in public/images/backgrounds  =>  ['day-office.jpg' => 'Day Office', ...] */
@@ -119,13 +179,19 @@ class Setting extends Model
         return $this->bg_image_path ? 'upload' : 'demo'; // rows saved before this feature
     }
 
-    /** The gallery file in use (falls back to the first one). */
-    public function bgDemo(): ?string
+    /** Gallery file chosen for 'dark' or 'light' (defaults to the current mode, then the first picture). */
+    public function bgDemo(?string $mode = null): ?string
     {
+        $mode  = $this->modeOrCurrent($mode);
         $demos = self::demoImages();
-        $pick  = (string) $this->bg_demo;
 
-        return isset($demos[$pick]) ? $pick : array_key_first($demos);
+        foreach ([$this->{'bg_' . $mode . '_demo'}, $this->bg_demo] as $pick) {
+            if ($pick && isset($demos[$pick])) {
+                return $pick;
+            }
+        }
+
+        return array_key_first($demos);
     }
 
     public function bgUploadUrl(): ?string
@@ -192,12 +258,22 @@ class Setting extends Model
         return in_array($value, self::FONTS, true) ? $value : self::DEFAULT_FONTS[$which];
     }
 
-    /** 'dark' (dark text on a light wash), 'light' (white text on a dark wash) or 'custom'. */
-    public function heroText(): string
+    /** What the admin picked: auto, dark, light or custom. */
+    public function heroTextSetting(): string
     {
         $value = $this->hero_text ?? null;
 
-        return in_array($value, self::HERO_TEXT, true) ? $value : 'dark';
+        return in_array($value, self::HERO_TEXT, true) ? $value : 'auto';
+    }
+
+    /** What is really used: 'auto' = light text in dark mode, dark text in light mode. */
+    public function heroText(): string
+    {
+        $value = $this->heroTextSetting();
+
+        return $value === 'auto'
+            ? ($this->siteMode() === 'dark' ? 'light' : 'dark')
+            : $value;
     }
 
     /** The colour used when heroText() is 'custom'. */
@@ -336,6 +412,9 @@ class Setting extends Model
         if ($shade = $this->headerShade()) {
             $css .= ":root{--hdr-shade:{$shade};}";
         }
+
+        // ---- Logo sizes ----
+        $css .= $this->logoCss();
 
         return $css;
     }
