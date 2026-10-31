@@ -67,7 +67,7 @@ $visuals = [
     <div class="sv-intro">
       <div>
         <p>We offer a comprehensive range of software development and IT consulting services to help businesses thrive in the digital age.</p>
-        <div class="sv-badges"><span>8 core services</span><span>Cloud · AI · Robotics</span><span>Built with precision</span></div>
+        <div class="sv-badges"><span>8 core services</span><span>GenAI · Cybersecurity · Robotics</span><span>Built with precision</span></div>
       </div>
       <div class="sv-art">
         <div class="sv3" role="img" aria-label="Laptop showing code">

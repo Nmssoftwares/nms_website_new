@@ -411,7 +411,7 @@
       <div class="hh-prev" id="hhPrev" @if($setting->bgImageUrl()) style="--hh-img:url('{{ $setting->bgImageUrl() }}');" @endif>
         <div class="hh-bar"><b>NMS <em>Softwares</em></b><span><i></i><i></i><i></i></span></div>
         <div class="hh-body">
-          <small>CLOUD · AI · ENGINEERING</small>
+          <small>GENAI · CYBERSECURITY · ENGINEERING</small>
           <h4>Transforming Ideas Into Digital Reality</h4>
           <p>We help businesses turn data into insights with survey reports and AI.</p>
         </div>

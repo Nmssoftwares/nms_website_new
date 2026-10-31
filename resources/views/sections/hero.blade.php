@@ -4,7 +4,7 @@
   <canvas id="hero3d"></canvas>
   <div class="wrap hero-inner">
     <div>
-      <div class="eyebrow-line">Cloud · AI · Engineering</div>
+      
       <h1 class="grad-text">Transforming Ideas Into Digital Reality</h1>
       <p>We help businesses turn data into insights with survey reports, enhancing their power through
         data science and artificial intelligence.</p>

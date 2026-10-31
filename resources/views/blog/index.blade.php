@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Blog — NMS Softwares')
-@section('meta_description', 'Notes on AI, cloud engineering and robotics from the NMS Softwares team.')
+@section('meta_description', 'Notes on GenAI, cybersecurity and robotics from the NMS Softwares team.')
 
 @section('content')
 
@@ -9,7 +9,7 @@
   <div class="wrap">
     <div class="index">Blog</div>
     <h1 class="grad-text blog-index-title">From the blog</h1>
-    <p class="blog-index-lead">Writing on AI, cloud engineering and robotics from the NMS Softwares team.</p>
+    <p class="blog-index-lead">Writing on GenAI, cybersecurity and robotics from the NMS Softwares team.</p>
   </div>
 </section>
 
