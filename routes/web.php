@@ -42,6 +42,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::get('analytics', [AnalyticsController::class, 'dashboard'])->name('analytics');
+    Route::get('analytics/live', [AnalyticsController::class, 'live'])->name('analytics.live');
+    Route::get('analytics/export', [AnalyticsController::class, 'export'])->name('analytics.export');
+    Route::delete('analytics/purge', [AnalyticsController::class, 'purge'])->name('analytics.purge');
 
     Route::resource('posts', PostController::class)->except('show');
     Route::resource('employees', EmployeeController::class)->except('show');

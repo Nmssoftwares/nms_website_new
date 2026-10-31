@@ -1,4 +1,4 @@
-/* Simple first-party analytics: page view, scroll depth, clicks. */
+/* First-party analytics: page view, scroll depth, clicks (with section + type). */
 (function () {
   var cfg = window.NMS_TRACK;
   if (!cfg) return;
@@ -13,13 +13,15 @@
     }
   } catch (e) { vid = 'anon' + Math.random().toString(36).slice(2, 10); }
 
-  function send(type, label, value) {
+  function send(type, label, value, section, kind) {
     var fd = new FormData();
     fd.append('_token', cfg.token);
     fd.append('v', vid);
     fd.append('t', type);
     fd.append('p', location.pathname);
-    if (label) fd.append('l', label.slice(0, 150));
+    if (label)   fd.append('l', label.slice(0, 150));
+    if (section) fd.append('s', section);
+    if (kind)    fd.append('k', kind);
     if (value != null) fd.append('n', value);
     if (type === 'view') fd.append('r', document.referrer || '');
     try {
@@ -49,13 +51,48 @@
   setTimeout(check, 1500);
 
   // 3) clicks on links and buttons
+  var SOCIAL = /(facebook|instagram|linkedin|twitter|x\.com|youtube|github|wa\.me|whatsapp|t\.me|telegram|tiktok)/i;
+
+  function sectionOf(el) {
+    var s = el.closest('section[id],footer[id]');
+    if (s) return s.id.slice(0, 40);
+    if (el.closest('header,nav')) return 'header';
+    return 'other';
+  }
+
+  function kindOf(el, href, section) {
+    if (/^(mailto|tel):/i.test(href)) return 'contact';
+    if (SOCIAL.test(href)) return 'social';
+    if (el.closest('header,nav')) return 'nav';
+    if (/\/blog(\/|$|#)/i.test(href) || section === 'blog') return 'blog';
+    if (section === 'team') return 'team';
+    var isButton = el.tagName === 'BUTTON' || /(^|\s)(btn|button|cta)/i.test(String(el.className || ''));
+    if (isButton) return (section === 'contact' && el.type === 'submit') ? 'contact' : 'cta';
+    if (section === 'contact') return 'contact';
+    return 'other';
+  }
+
+  function nameOf(el, href) {
+    var t = (el.getAttribute('data-track') || el.getAttribute('aria-label') || el.innerText || el.title || '')
+      .replace(/\s+/g, ' ').trim();
+    if (!t && href) {
+      try {
+        if (/^(mailto|tel):/i.test(href)) {
+          t = href.replace(/^(mailto|tel):/i, '');
+        } else {
+          var u = new URL(href, location.href);
+          t = u.host !== location.host ? u.host.replace(/^www\./, '') : (u.hash || u.pathname);
+        }
+      } catch (e) { t = href; }
+    }
+    return (t || el.tagName.toLowerCase()).slice(0, 60);
+  }
+
   document.addEventListener('click', function (e) {
     var el = e.target.closest && e.target.closest('a,button');
     if (!el) return;
-    var text = (el.getAttribute('aria-label') || el.innerText || el.title || '').replace(/\s+/g, ' ').trim();
-    var href = el.getAttribute('href') || '';
-    var label = text || href || el.tagName.toLowerCase();
-    if (href && text) label = text + ' → ' + href;
-    send('click', label);
+    var href    = el.getAttribute('href') || '';
+    var section = sectionOf(el);
+    send('click', nameOf(el, href), null, section, kindOf(el, href, section));
   }, true);
 })();
