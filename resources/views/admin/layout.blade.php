@@ -44,10 +44,20 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
         Portfolio
       </a>
-      <a href="{{ route('admin.employees.index') }}" class="{{ request()->routeIs('admin.employees.*') ? 'active' : '' }}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Team
-      </a>
+
+      @php $teamOpen = request()->routeIs('admin.employees.*', 'admin.team-categories.*'); @endphp
+      <div class="nav-group {{ $teamOpen ? 'open' : '' }}">
+        <a href="#" class="nav-toggle {{ $teamOpen ? 'active' : '' }}" aria-expanded="{{ $teamOpen ? 'true' : 'false' }}" aria-controls="teamMenu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Team
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="nav-sub" id="teamMenu">
+          <a href="{{ route('admin.employees.index') }}" class="{{ request()->routeIs('admin.employees.index') ? 'on' : '' }}">All members</a>
+          <a href="{{ route('admin.team-categories.index') }}" class="{{ request()->routeIs('admin.team-categories.*') ? 'on' : '' }}">Categories</a>
+          <a href="{{ route('admin.employees.create') }}" class="{{ request()->routeIs('admin.employees.create') ? 'on' : '' }}">+ Add member</a>
+        </div>
+      </div>
 
       <div class="nav-label">Inbox</div>
       @php $unreadMessages = \App\Models\ContactMessage::unread()->count(); @endphp
@@ -144,6 +154,16 @@
   // auto-hide the green success message
   document.querySelectorAll('.flash').forEach(function(f){
     setTimeout(function(){ f.classList.add('hide'); setTimeout(function(){ f.remove(); }, 450); }, 4500);
+  });
+</script>
+<script>
+  // Team dropdown in the sidebar
+  document.querySelectorAll('.nav-toggle').forEach(function (t) {
+    t.addEventListener('click', function (e) {
+      e.preventDefault();
+      var open = t.closest('.nav-group').classList.toggle('open');
+      t.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
   });
 </script>
 </body>

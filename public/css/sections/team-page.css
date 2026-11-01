@@ -1,0 +1,26 @@
+/* ===== /team page: filter pills + featured leader card ===== */
+.tp-filter{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.tp-pill{font:inherit;font-size:.86rem;font-weight:600;padding:8px 16px;border-radius:999px;cursor:pointer;
+  color:var(--nm-a);background:color-mix(in srgb,var(--nm-a) 8%,transparent);
+  border:1px solid color-mix(in srgb,var(--nm-a) 28%,transparent);transition:background .2s,color .2s,transform .2s}
+.tp-pill:hover{transform:translateY(-2px);background:color-mix(in srgb,var(--nm-a) 16%,transparent)}
+.tp-pill.is-on{color:#fff;background:linear-gradient(135deg,var(--nm-a),var(--nm-b));border-color:transparent}
+.tp-pill:focus-visible{outline:3px solid color-mix(in srgb,var(--nm-a) 45%,transparent);outline-offset:2px}
+
+.tp-group .sec-head{margin-bottom:28px}
+
+/* featured leader */
+.tp-lead{display:grid;grid-template-columns:220px 1fr;gap:34px;align-items:center;margin-bottom:28px;padding:30px;
+  border-radius:24px;background:#fff;border:1px solid color-mix(in srgb,var(--nm-a) 16%,transparent)}
+.tp-lead .tm-photo{width:200px;height:200px;margin:0}
+.tp-lead h3{margin:0 0 10px;font-size:1.6rem}
+.tp-lead .tm-bio{flex:none;margin:0 0 18px;font-size:1rem;line-height:1.7}
+.tp-lead .tm-social{justify-content:flex-start;border-top:0;padding-top:0}
+
+.dzr .tp-lead{background:rgba(255,255,255,.05);border-color:rgba(154,123,242,.25)}
+html.mode-light .dzr .tp-lead{background:#fff;border-color:rgba(107,92,231,.2)}
+
+@media (max-width:760px){
+  .tp-lead{grid-template-columns:1fr;justify-items:center;text-align:center;padding:24px}
+  .tp-lead .tm-social{justify-content:center}
+}

@@ -17,9 +17,19 @@
   </div>
 
   <div class="field">
-    <label>Category (short tag shown above the title, e.g. "Healthcare · Analytics")</label>
+    <label>Category (short tag shown above the title, e.g. "ERP · SaaS")</label>
     <input type="text" name="category" value="{{ old('category') }}">
     @error('category')<div class="err">{{ $message }}</div>@enderror
+  </div>
+
+  <div class="field">
+    <label>Type</label>
+    <select name="type" required>
+      @foreach(\App\Models\Project::TYPES as $value => $label)
+        <option value="{{ $value }}" @selected(old('type', 'software') === $value)>{{ $label }}</option>
+      @endforeach
+    </select>
+    @error('type')<div class="err">{{ $message }}</div>@enderror
   </div>
 
   <div class="field">
@@ -38,6 +48,12 @@
     <label>Tech stack (comma-separated, e.g. "React, Node.js, Python, TensorFlow")</label>
     <input type="text" name="tech_stack" value="{{ old('tech_stack') }}">
     @error('tech_stack')<div class="err">{{ $message }}</div>@enderror
+  </div>
+
+  <div class="field">
+    <label>Website link (optional, e.g. https://offnexa.com)</label>
+    <input type="url" name="website_url" value="{{ old('website_url') }}">
+    @error('website_url')<div class="err">{{ $message }}</div>@enderror
   </div>
 
   <div class="field">

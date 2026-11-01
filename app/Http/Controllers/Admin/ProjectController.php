@@ -63,13 +63,15 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index')->with('status', 'Project removed.');
     }
 
-    private function validateData(Request $request): array
+       private function validateData(Request $request): array
     {
         return $request->validate([
             'title' => 'required|string|max:150',
             'category' => 'nullable|string|max:100',
+            'type' => 'required|in:software,hardware',
             'description' => 'nullable|string|max:600',
             'tech_stack' => 'nullable|string|max:255',
+            'website_url' => 'nullable|url|max:255',
             'sort_order' => 'nullable|integer|min:0',
             'image' => 'nullable|image|max:4096',
         ]);

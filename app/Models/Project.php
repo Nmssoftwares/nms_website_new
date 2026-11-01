@@ -6,12 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    public const TYPES = [
+        'software' => 'Software',
+        'hardware' => 'Hardware',
+    ];
+
     protected $fillable = [
         'title',
         'category',
+        'type',
         'description',
         'image_path',
         'tech_stack',
+        'website_url',
         'sort_order',
     ];
 
@@ -26,5 +33,10 @@ class Project extends Model
             return [];
         }
         return array_map('trim', explode(',', $this->tech_stack));
+    }
+
+    public function typeLabel(): string
+    {
+        return self::TYPES[$this->type] ?? 'Software';
     }
 }

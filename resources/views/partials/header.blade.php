@@ -11,7 +11,7 @@
       <a href="{{ route('home') }}#about">About</a>
       <a href="{{ route('home') }}#services">Services</a>
       <a href="{{ route('home') }}#portfolio">Portfolio</a>
-      <a href="{{ route('home') }}#team">Team</a>
+      <a href="{{ route('team') }}">Team</a>
       <a href="{{ route('home') }}#blog">Blog</a>
       <a href="{{ route('home') }}#contact" class="nav-cta">Contact Us</a>
     </div>

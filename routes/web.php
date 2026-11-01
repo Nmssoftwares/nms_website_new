@@ -5,11 +5,13 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\TeamCategoryController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TeamController;
 use App\Models\Employee;
 use App\Models\Post;
 use App\Models\Project;
@@ -26,6 +28,8 @@ Route::post('/track', [AnalyticsController::class, 'track'])
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
+
+Route::get('/team', [TeamController::class, 'index'])->name('team');
 
 // ---- Auth ----
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -48,6 +52,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::resource('posts', PostController::class)->except('show');
     Route::resource('employees', EmployeeController::class)->except('show');
+    Route::resource('team-categories', TeamCategoryController::class)->except(['create', 'show']);
     Route::resource('projects', ProjectController::class)->except('show');
     Route::resource('messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
     Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');

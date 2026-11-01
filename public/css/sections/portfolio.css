@@ -25,3 +25,10 @@
 .sk-line--short{width:85%;margin-bottom:18px}
 .sk-pills{display:flex;gap:8px}
 .sk-pill{height:22px;width:60px;background:#F1F2F6;border-radius:999px}
+/* Software / Hardware filter tabs */
+.fp-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px}
+.fp-tab{cursor:pointer;padding:9px 22px;border-radius:999px;font:inherit;font-weight:700;font-size:.9rem;color:var(--nm-a);background:transparent;border:1px solid color-mix(in srgb,var(--nm-a) 30%,transparent);transition:all .25s ease}
+.fp-tab:hover{background:color-mix(in srgb,var(--nm-a) 9%,transparent)}
+.fp-tab.is-active{color:#fff;background:linear-gradient(90deg,var(--nm-a),var(--nm-b));border-color:transparent}
+.fp-card.is-hidden{display:none}
+.fp-links{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
