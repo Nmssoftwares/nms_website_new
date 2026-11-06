@@ -50,10 +50,14 @@
         <td>
           <div class="actions">
             <a href="{{ route('admin.employees.edit', $employee) }}" class="btn-outline">Edit</a>
-            <form method="POST" action="{{ route('admin.employees.destroy', $employee) }}" onsubmit="return confirm('Remove this team member?');">
-              @csrf @method('DELETE')
-              <button type="submit" class="btn-danger">Delete</button>
-            </form>
+            @if($employee->is_locked)
+              <span class="cat-tag muted" title="Fixed team member">🔒 Fixed</span>
+            @else
+              <form method="POST" action="{{ route('admin.employees.destroy', $employee) }}" onsubmit="return confirm('Remove this team member?');">
+                @csrf @method('DELETE')
+                <button type="submit" class="btn-danger">Delete</button>
+              </form>
+            @endif
           </div>
         </td>
       </tr>

@@ -17,7 +17,22 @@ class Employee extends Model
         'x_url',
         'email',
         'sort_order',
+        'is_locked',
     ];
+
+    protected $casts = [
+        'is_locked' => 'boolean',
+    ];
+
+    protected static function booted(): void
+    {
+        // Safety net: fixed members can never be deleted, from anywhere in the app.
+        static::deleting(function (Employee $employee) {
+            if ($employee->is_locked) {
+                return false;
+            }
+        });
+    }
 
     public function category(): BelongsTo
     {
@@ -26,8 +41,15 @@ class Employee extends Model
 
     public function photoUrl(): string
     {
-        return $this->photo_path
-            ? asset('storage/' . $this->photo_path)
-            : asset('images/employee-placeholder.png');
+        if (! $this->photo_path) {
+            return asset('images/employee-placeholder.png');
+        }
+
+        // Seeded photos live in public/images/..., admin uploads live in storage.
+        if (str_starts_with($this->photo_path, 'images/')) {
+            return asset($this->photo_path);
+        }
+
+        return asset('storage/' . $this->photo_path);
     }
 }

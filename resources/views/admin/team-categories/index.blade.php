@@ -63,3 +63,7 @@
   </tbody>
 </table>
 @endsection
+
+@section('scripts')
+<script src="{{ asset('js/team-motion.js') }}"></script>
+@endsection

@@ -24,6 +24,16 @@
   </div>
 
   <div class="field">
+    <label>Type</label>
+    <select name="type" required>
+      @foreach(\App\Models\Project::TYPES as $value => $label)
+        <option value="{{ $value }}" @selected(old('type', $project->type ?? 'software') === $value)>{{ $label }}</option>
+      @endforeach
+    </select>
+    @error('type')<div class="err">{{ $message }}</div>@enderror
+  </div>
+
+  <div class="field">
     <label>Description</label>
     <textarea name="description">{{ old('description', $project->description) }}</textarea>
     @error('description')<div class="err">{{ $message }}</div>@enderror
@@ -43,6 +53,12 @@
     <label>Tech stack (comma-separated)</label>
     <input type="text" name="tech_stack" value="{{ old('tech_stack', $project->tech_stack) }}">
     @error('tech_stack')<div class="err">{{ $message }}</div>@enderror
+  </div>
+
+  <div class="field">
+    <label>Website link (optional, e.g. https://offnexa.com)</label>
+    <input type="url" name="website_url" value="{{ old('website_url', $project->website_url) }}">
+    @error('website_url')<div class="err">{{ $message }}</div>@enderror
   </div>
 
   <div class="field">

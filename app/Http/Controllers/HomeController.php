@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index()
     {
         $projects    = Project::orderBy('sort_order')->orderBy('title')->get();
-        $employees   = Employee::orderBy('sort_order')->orderBy('name')->get();
+        $employees   = Employee::with('category')->orderBy('sort_order')->orderBy('name')->get();
         $latestPosts = Post::published()
             ->select(['id', 'title', 'slug', 'excerpt', 'published_at'])
             ->latest('published_at')

@@ -41,6 +41,16 @@ class TeamCategoryController extends Controller
 
     public function destroy(TeamCategory $team_category)
     {
+        if ($team_category->employees()->where('is_locked', true)->exists()) {
+            return redirect()->route('admin.team-categories.index')
+                ->with('status', 'This category has fixed team members, so it cannot be deleted.');
+        }
+
+        if ($team_category->employees()->where('is_locked', true)->exists()) {
+            return redirect()->route('admin.team-categories.index')
+                ->with('status', 'This category has fixed team members, so it cannot be deleted.');
+        }
+
         $team_category->delete();
 
         return redirect()->route('admin.team-categories.index')

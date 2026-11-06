@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             PostSeeder::class,
             ProjectSeeder::class,
+            TeamMemberSeeder::class,
         ]);
     }
 }

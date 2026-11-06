@@ -76,6 +76,11 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
+        if ($employee->is_locked) {
+            return redirect()->route('admin.employees.index')
+                ->with('status', $employee->name . ' is a fixed team member and cannot be deleted.');
+        }
+
         $this->deleteUpload($employee->photo_path);
         $employee->delete();
 
